@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="[NOMBRE] — [PROFESION]. [DESCRIPCION DEL PORTAFOLIO].">
+<meta property="og:title" content="[NOMBRE] | [PROFESION]">
+<meta property="og:description" content="Portafolio de [NOMBRE] — [ESPECIALIDAD].">
+<meta property="og:type" content="website">
+<link rel="alternate" type="application/json" href="about.json" title="Perfil estructurado (JSON)">
+
+<title>[NOMBRE] | [PROFESION] (Tablet)</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+:root{
+  --frost: 190,225,255;
+  --accent: 0,255,200;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:90px;
+}
+
+body{
+background:#020617;
+overflow-x:hidden;
+font-family:sans-serif;
+}
+
+a, button{
+  -webkit-tap-highlight-color:transparent;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{
+    animation-duration:0.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.001ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+
+/* CANVAS */
+
+#auroraCanvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-4;
+transition:transform .2s ease-out;
+}
+
+#snowCanvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-2;
+}
+
+/* PARALLAX MOUNTAINS */
+
+.mountain-layer{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+pointer-events:none;
+will-change:transform;
+}
+
+.mountain-back{z-index:-3;opacity:.5;}
+.mountain-mid{z-index:-2;opacity:.7;}
+.mountain-front{z-index:-1;}
+
+/* NAV */
+
+#mainNav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:50;
+background:rgba(2,6,23,0.55);
+-webkit-backdrop-filter:blur(14px);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+.nav-link{
+position:relative;
+color:#cbd5e1;
+transition:color .25s;
+}
+
+.nav-link::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0%;
+height:1px;
+background:rgb(var(--frost));
+transition:width .3s;
+}
+
+.nav-link:hover{
+color:rgb(var(--frost));
+}
+
+.nav-link:hover::after{
+width:100%;
+}
+
+.nav-link.active{
+color:rgb(var(--frost));
+}
+
+.nav-link.active::after{
+width:100%;
+}
+
+.nav-link:active{
+color:rgb(var(--frost));
+}
+
+.nav-link:active::after{
+width:100%;
+}
+
+/* HERO PARALLAX ELEMENTS */
+
+.hero-layer{
+transition:transform .15s ease-out;
+will-change:transform;
+}
+
+/* PROJECT / SKILL CARDS (mouse tilt) */
+
+.tilt-card{
+transition:transform .15s ease-out, box-shadow .3s;
+transform-style:preserve-3d;
+will-change:transform;
+}
+
+.tilt-card:hover,
+.tilt-card.is-touched{
+box-shadow:0 20px 45px rgba(0,255,200,0.15);
+}
+
+.tilt-card.is-touched{
+transform:translateY(-2px);
+}
+
+.project-card img{
+transition:transform .5s;
+}
+
+.project-card:hover img,
+.project-card.is-touched img{
+transform:scale(1.08);
+}
+
+.project-overlay{
+opacity:0;
+transition:opacity .3s;
+pointer-events:none;
+}
+
+.project-card:hover .project-overlay,
+.project-card.is-touched .project-overlay{
+opacity:1;
+}
+
+.project-caption{
+background:linear-gradient(to top, rgba(2,6,23,0.92), rgba(2,6,23,0.55) 70%, transparent);
+}
+
+/* GLASS CARDS */
+
+.glass-card{
+background:rgba(15,23,42,0.6);
+-webkit-backdrop-filter:blur(10px);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:16px;
+padding:28px;
+}
+
+/* SKILL BADGES with spotlight */
+
+.skill-card{
+position:relative;
+background:rgba(15,23,42,0.55);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:14px;
+padding:22px;
+overflow:hidden;
+}
+
+.skill-card::before{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), rgba(0,255,200,0.14), transparent 60%);
+opacity:0;
+transition:opacity .3s;
+pointer-events:none;
+}
+
+.skill-card:hover::before,
+.skill-card.is-touched::before{
+opacity:1;
+}
+
+.skill-bar-fill{
+transition:width 1.2s cubic-bezier(.2,.8,.2,1);
+}
+
+/* SECTION EYEBROW */
+
+.eyebrow{
+letter-spacing:.25em;
+font-size:.7rem;
+color:rgba(190,225,255,0.6);
+text-transform:uppercase;
+}
+
+/* HERO HEIGHT: dvh avoids viewport jumps when the browser chrome hides/shows */
+#home{
+min-height:85vh;
+}
+
+@supports (height: 100dvh){
+  #home{
+  min-height:85dvh;
+  }
+}
+
+/* BACK TO TOP */
+
+#backToTop{
+opacity:0;
+pointer-events:none;
+transition:opacity .25s ease, transform .2s ease;
+}
+
+#backToTop.backtotop-visible{
+opacity:1;
+pointer-events:auto;
+}
+
+#backToTop:hover{
+transform:scale(1.06);
+}
+
+#backToTop:active{
+transform:scale(0.94);
+}
+
+</style>
+
+</head>
+
+<body class="text-gray-200">
+
+<canvas id="auroraCanvas"></canvas>
+<canvas id="snowCanvas"></canvas>
+
+<!-- MOUNTAINS -->
+
+<svg class="mountain-layer mountain-back" viewBox="0 0 1440 320">
+<path fill="#0f172a" d="M0 260 L120 220 L260 260 L420 180 L600 260 L760 200 L900 260 L1100 190 L1260 260 L1440 210 L1440 320 L0 320 Z"></path>
+</svg>
+
+<svg class="mountain-layer mountain-mid" viewBox="0 0 1440 320">
+<path fill="#020617" d="M0 280 L150 200 L300 270 L480 160 L650 260 L820 170 L1000 260 L1180 180 L1350 260 L1440 210 L1440 320 L0 320 Z"></path>
+</svg>
+
+<svg class="mountain-layer mountain-front" viewBox="0 0 1440 320">
+<path fill="#01030a" d="M0 300 L180 210 L350 280 L520 180 L700 290 L880 200 L1060 300 L1240 210 L1440 280 L1440 320 L0 320 Z"></path>
+</svg>
+
+<!-- NAV -->
+
+<nav id="mainNav">
+<div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+
+<a href="#home" class="text-blue-200 font-bold tracking-wide text-lg shrink-0">[NOMBRE]</a>
+
+<div class="flex items-center flex-wrap justify-end gap-x-1 gap-y-1">
+<a href="#home" class="nav-link px-3 py-2.5 text-sm" data-section="home">Home</a>
+<a href="#proyectos" class="nav-link px-3 py-2.5 text-sm" data-section="proyectos">Proyectos</a>
+<a href="#experimentos" class="nav-link px-3 py-2.5 text-sm" data-section="experimentos">Experimentos</a>
+<a href="#habilidades" class="nav-link px-3 py-2.5 text-sm" data-section="habilidades">Habilidades</a>
+<a href="#contacto" class="nav-link px-3 py-2.5 text-sm" data-section="contacto">Contacto</a>
+</div>
+
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<section id="home" class="text-center pt-32 pb-20 flex flex-col items-center justify-center px-6">
+
+<img
+data-depth="20"
+src="assets/logo.jpg"
+class="hero-layer mx-auto mb-6 w-48 opacity-90 drop-shadow-[0_0_20px_rgba(0,255,200,0.35)]"
+alt="[NOMBRE] Logo"
+>
+
+<h1 data-depth="10" class="hero-layer text-5xl font-bold text-blue-200 drop-shadow-lg tracking-wide">
+[NOMBRE]
+</h1>
+
+<p data-depth="5" class="hero-layer mt-5 text-lg text-blue-300">
+Game Developer • Diseñador • Artista
+</p>
+
+<p data-depth="3" class="hero-layer mt-3 text-gray-400 text-sm max-w-md">
+Programación de Gameplay • Diseño de Sistemas • Experimentos Interactivos
+</p>
+
+<a href="#proyectos"
+class="inline-block mt-8 bg-blue-400 hover:bg-blue-300 text-black px-6 py-3 rounded-lg transition">
+Ver Proyectos
+</a>
+
+</section>
+
+<!-- PROYECTOS -->
+
+<section id="proyectos" class="max-w-6xl mx-auto py-16 px-6">
+
+<p class="eyebrow text-center mb-3">Trabajo terminado</p>
+<h2 class="text-4xl font-bold text-center mb-16">
+Proyectos
+</h2>
+
+<div class="grid grid-cols-2 gap-6 place-items-center mb-16">
+
+<a href="#project1" class="project-card tilt-card w-full max-w-sm relative rounded-xl overflow-hidden shadow-xl block">
+<img src="assets/project-1-cover.jpg" class="w-full h-44 object-cover">
+<div class="project-overlay absolute inset-0 bg-black/25"></div>
+<div class="project-caption absolute bottom-0 left-0 right-0 px-5 pt-8 pb-4">
+<h3 class="text-xl font-semibold">[PROYECTO 1]</h3>
+<p class="text-gray-300 text-sm mt-0.5">[DESCRIPCION BREVE]</p>
+</div>
+</a>
+
+<a href="#project2" class="project-card tilt-card w-full max-w-sm relative rounded-xl overflow-hidden shadow-xl block">
+<img src="assets/project-2-cover.jpg" class="w-full h-44 object-cover">
+<div class="project-overlay absolute inset-0 bg-black/25"></div>
+<div class="project-caption absolute bottom-0 left-0 right-0 px-5 pt-8 pb-4">
+<h3 class="text-xl font-semibold">[PROYECTO 2]</h3>
+<p class="text-gray-300 text-sm mt-0.5">[DESCRIPCION BREVE]</p>
+</div>
+</a>
+
+<a href="#project3" class="project-card tilt-card w-full max-w-sm relative rounded-xl overflow-hidden shadow-xl block">
+<img src="assets/project-3-cover.jpg" class="w-full h-44 object-cover">
+<div class="project-overlay absolute inset-0 bg-black/25"></div>
+<div class="project-caption absolute bottom-0 left-0 right-0 px-5 pt-8 pb-4">
+<h3 class="text-xl font-semibold">[PROYECTO 3]</h3>
+<p class="text-gray-300 text-sm mt-0.5">[DESCRIPCION BREVE]</p>
+</div>
+</a>
+
+</div>
+
+<!-- PROJECT 1 -->
+
+<div id="project1" class="glass-card tilt-card mb-16">
+
+<h3 class="text-3xl font-bold mb-4">[PROYECTO 1]</h3>
+
+<p class="text-gray-300 mb-6">
+[DESCRIPCION COMPLETA DEL PROYECTO 1]
+</p>
+
+<div class="grid grid-cols-3 gap-3 mb-8">
+<img src="assets/project-1-image-1.jpg" loading="lazy" class="rounded-lg shadow-lg">
+<img src="assets/project-1-image-2.jpg" loading="lazy" class="rounded-lg shadow-lg">
+<img src="assets/project-1-image-3.jpg" loading="lazy" class="rounded-lg shadow-lg">
+</div>
+
+<div class="flex gap-4 flex-wrap">
+<a href="#" class="bg-blue-400 hover:bg-blue-300 text-black px-4 py-2.5 rounded-lg">[ENLACE PRINCIPAL]</a>
+<a href="#" class="bg-gray-700 hover:bg-gray-600 px-4 py-2.5 rounded-lg">[ENLACE SECUNDARIO]</a>
+</div>
+
+</div>
+
+<!-- PROJECT 2 -->
+
+<div id="project2" class="glass-card tilt-card mb-16">
+
+<h3 class="text-3xl font-bold mb-4">[PROYECTO 2]</h3>
+
+<p class="text-gray-300 mb-6">
+[DESCRIPCION COMPLETA DEL PROYECTO 2]
+</p>
+
+<div class="grid grid-cols-3 gap-3 mb-8">
+<img src="assets/project-2-image-1.jpg" loading="lazy" class="rounded-lg shadow-lg">
+<img src="assets/project-2-image-2.jpg" loading="lazy" class="rounded-lg shadow-lg">
+<img src="assets/project-2-image-3.jpg" loading="lazy" class="rounded-lg shadow-lg">
+</div>
+
+<div class="flex gap-4 flex-wrap">
+<a href="#" class="bg-blue-400 hover:bg-blue-300 text-black px-4 py-2.5 rounded-lg">[REPOSITORIO]</a>
+<a href="#" class="bg-gray-700 hover:bg-gray-600 px-4 py-2.5 rounded-lg">[PRESENTACION]</a>
+</div>
+
+</div>
+
+<!-- PROJECT 3 -->
+
+<div id="project3" class="glass-card tilt-card">
+
+<h3 class="text-3xl font-bold mb-4">[PROYECTO 3]</h3>
+
+<p class="text-gray-300 mb-6">
+[DESCRIPCION COMPLETA DEL PROYECTO 3]
+</p>
+
+<div class="grid grid-cols-3 gap-3 mb-8">
+<img src="assets/project-3-image-1.jpg" loading="lazy" class="rounded-lg shadow-lg">
+<img src="assets/project-3-image-2.jpg" loading="lazy" class="rounded-lg shadow-lg">
+<img src="assets/project-3-image-3.jpg" loading="lazy" class="rounded-lg shadow-lg">
+</div>
+
+<div class="flex gap-4 flex-wrap">
+<a href="#" class="bg-blue-400 hover:bg-blue-300 text-black px-4 py-2.5 rounded-lg">Ver Proyecto</a>
+</div>
+
+</div>
+
+</section>
+
+<!-- EXPERIMENTOS -->
+
+<section id="experimentos" class="max-w-6xl mx-auto py-16 px-6">
+
+<p class="eyebrow text-center mb-3">Exploración técnica</p>
+<h2 class="text-4xl font-bold text-center mb-16">
+Experimentos
+</h2>
+
+<div class="grid grid-cols-2 gap-6 place-items-center mb-16">
+
+<a href="#project4" class="project-card tilt-card w-full max-w-md relative rounded-xl overflow-hidden shadow-xl block">
+<img src="assets/experiment-1-cover.jpg" class="w-full h-44 object-cover">
+<div class="project-overlay absolute inset-0 bg-black/25"></div>
+<div class="project-caption absolute bottom-0 left-0 right-0 px-5 pt-8 pb-4">
+<h3 class="text-xl font-semibold">[EXPERIMENTO 1]</h3>
+<p class="text-gray-300 text-sm mt-0.5">[DESCRIPCION BREVE]</p>
+</div>
+</a>
+
+<a href="#project5" class="project-card tilt-card w-full max-w-md relative rounded-xl overflow-hidden shadow-xl block">
+<img src="assets/experiment-2-cover.jpg" class="w-full h-44 object-cover">
+<div class="project-overlay absolute inset-0 bg-black/25"></div>
+<div class="project-caption absolute bottom-0 left-0 right-0 px-5 pt-8 pb-4">
+<h3 class="text-xl font-semibold">[EXPERIMENTO 2]</h3>
+<p class="text-gray-300 text-sm mt-0.5">[DESCRIPCION BREVE]</p>
+</div>
+</a>
+
+</div>
+
+<!-- PROJECT 4 -->
+
+<div id="project4" class="glass-card tilt-card mb-16">
+
+<h3 class="text-3xl font-bold mb-4">[EXPERIMENTO 1]</h3>
+
+<p class="text-gray-300 mb-6">
+[DESCRIPCION COMPLETA DEL EXPERIMENTO 1]
+</p>
+
+<div class="grid grid-cols-3 gap-3 mb-8">
+<img src="assets/experiment-1-image-1.jpg" loading="lazy" class="rounded-lg shadow-lg">
+<img src="assets/experiment-1-image-2.jpg" loading="lazy" class="rounded-lg shadow-lg">
+<img src="assets/experiment-1-image-3.jpg" loading="lazy" class="rounded-lg shadow-lg">
+</div>
+
+<div class="flex gap-4 flex-wrap">
+<a href="#" class="bg-blue-400 hover:bg-blue-300 text-black px-4 py-2.5 rounded-lg">[ENLACE 1]</a>
+<a href="#" class="bg-blue-400 hover:bg-blue-300 text-black px-4 py-2.5 rounded-lg">[ENLACE 2]</a>
+<a href="#" class="bg-blue-400 hover:bg-blue-300 text-black px-4 py-2.5 rounded-lg">[ENLACE 3]</a>
+<a href="#" class="bg-blue-400 hover:bg-blue-300 text-black px-4 py-2.5 rounded-lg">[ENLACE 4]</a>
+</div>
+
+</div>
+
+<!-- PROJECT 5 -->
+
+<div id="project5" class="glass-card tilt-card">
+
+<h3 class="text-3xl font-bold mb-4">[EXPERIMENTO 2]</h3>
+
+<p class="text-gray-300 mb-6">
+[DESCRIPCION COMPLETA DEL EXPERIMENTO 2]
+</p>
+
+<div class="grid grid-cols-3 gap-3 mb-8">
+<img src="assets/experiment-2-image-1.jpg" loading="lazy" class="rounded-lg shadow-lg">
+<img src="assets/experiment-2-image-2.jpg" loading="lazy" class="rounded-lg shadow-lg">
+<img src="assets/experiment-2-image-3.jpg" loading="lazy" class="rounded-lg shadow-lg">
+</div>
+
+<div class="flex gap-4 flex-wrap">
+<a href="#" class="bg-blue-400 hover:bg-blue-300 text-black px-4 py-2.5 rounded-lg">[ENLACE 1]</a>
+<a href="#" class="bg-blue-400 hover:bg-blue-300 text-black px-4 py-2.5 rounded-lg">[ENLACE 2]</a>
+<a href="#" class="bg-blue-400 hover:bg-blue-300 text-black px-4 py-2.5 rounded-lg">[ENLACE 3]</a>
+</div>
+
+</div>
+
+</section>
+
+<!-- HABILIDADES Y HERRAMIENTAS -->
+
+<section id="habilidades" class="max-w-6xl mx-auto py-16 px-6">
+
+<p class="eyebrow text-center mb-3">Caja de herramientas</p>
+<h2 class="text-4xl font-bold text-center mb-16">
+Habilidades y Herramientas
+</h2>
+
+<div class="grid grid-cols-2 gap-5">
+
+<div class="skill-card tilt-card">
+<h4 class="font-semibold text-blue-200 mb-1">Unity / C#</h4>
+<p class="text-sm text-gray-400 mb-3">Gameplay, sistemas y arquitectura de proyectos.</p>
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="skill-bar-fill h-full bg-blue-300 rounded-full" style="width:0%" data-fill="90"></div>
+</div>
+</div>
+
+<div class="skill-card tilt-card">
+<h4 class="font-semibold text-blue-200 mb-1">Diseño de Sistemas</h4>
+<p class="text-sm text-gray-400 mb-3">Mecánicas, balance y documentación de diseño.</p>
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="skill-bar-fill h-full bg-blue-300 rounded-full" style="width:0%" data-fill="85"></div>
+</div>
+</div>
+
+<div class="skill-card tilt-card">
+<h4 class="font-semibold text-blue-200 mb-1">Shaders / VFX</h4>
+<p class="text-sm text-gray-400 mb-3">Shader Graph, partículas y efectos visuales en Unity.</p>
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="skill-bar-fill h-full bg-blue-300 rounded-full" style="width:0%" data-fill="75"></div>
+</div>
+</div>
+
+<div class="skill-card tilt-card">
+<h4 class="font-semibold text-blue-200 mb-1">p5.js / JavaScript</h4>
+<p class="text-sm text-gray-400 mb-3">Simulaciones generativas y experimentos interactivos.</p>
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="skill-bar-fill h-full bg-blue-300 rounded-full" style="width:0%" data-fill="80"></div>
+</div>
+</div>
+
+<div class="skill-card tilt-card">
+<h4 class="font-semibold text-blue-200 mb-1">HTML / CSS</h4>
+<p class="text-sm text-gray-400 mb-3">Interfaces web e interactividad para portafolios y prototipos.</p>
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="skill-bar-fill h-full bg-blue-300 rounded-full" style="width:0%" data-fill="70"></div>
+</div>
+</div>
+
+<div class="skill-card tilt-card">
+<h4 class="font-semibold text-blue-200 mb-1">Trabajo en Equipo / Git</h4>
+<p class="text-sm text-gray-400 mb-3">Control de versiones y colaboración en game jams y proyectos universitarios.</p>
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="skill-bar-fill h-full bg-blue-300 rounded-full" style="width:0%" data-fill="85"></div>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- SOBRE MI / CONTACTO -->
+
+<section id="contacto" class="max-w-3xl mx-auto py-16 px-6">
+
+<p class="eyebrow text-center mb-3">Quién soy</p>
+<h2 class="text-3xl font-bold text-center mb-10">
+Sobre mí
+</h2>
+
+<div class="glass-card tilt-card mb-12">
+<p class="text-gray-300 text-center">
+[BIOGRAFIA Y PRESENTACION PERSONAL]
+</p>
+</div>
+
+<div class="glass-card tilt-card text-center">
+
+<h2 class="text-3xl font-bold mb-6">
+Contacto
+</h2>
+
+<a href="mailto:[CORREO]" class="text-blue-300 text-lg mb-6 inline-block underline decoration-blue-300/40 underline-offset-4">
+[CORREO]
+</a>
+
+<div class="flex justify-center gap-6 flex-wrap">
+
+<a href="#"
+class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg">
+[RED SOCIAL 1]
+</a>
+
+<a href="#"
+class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg">
+[RED SOCIAL 2]
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="text-center py-12 text-gray-400">
+
+<p>© [AÑO] [NOMBRE]</p>
+
+<a href="#home" class="text-blue-300 hover:text-blue-200 block mt-3">
+Volver arriba
+</a>
+
+</footer>
+
+<button id="backToTop" aria-label="Volver arriba" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-blue-400 text-black flex items-center justify-center shadow-lg">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+</button>
+
+<script>
+
+/* ============ NAV: active link on scroll (always-visible horizontal nav on tablet, no toggle needed) ============ */
+
+const sections=document.querySelectorAll("section[id]")
+const navLinks=document.querySelectorAll(".nav-link")
+
+const sectionObserver=new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+const id=entry.target.getAttribute("id")
+navLinks.forEach(link=>{
+link.classList.toggle("active",link.dataset.section===id)
+})
+}
+})
+},{rootMargin:"-45% 0px -45% 0px"})
+
+sections.forEach(s=>sectionObserver.observe(s))
+
+/* ============ BACK TO TOP ============ */
+
+const backToTop=document.getElementById("backToTop")
+
+function updateBackToTop(){
+if(window.scrollY>window.innerHeight*0.6){
+backToTop.classList.add("backtotop-visible")
+}else{
+backToTop.classList.remove("backtotop-visible")
+}
+}
+
+window.addEventListener("scroll",updateBackToTop,{passive:true})
+updateBackToTop()
+
+backToTop.addEventListener("click",()=>{
+window.scrollTo({top:0,behavior:"smooth"})
+})
+
+/* ============ PARALLAX: scroll (mountains) ============ */
+
+const back=document.querySelector(".mountain-back")
+const mid=document.querySelector(".mountain-mid")
+const front=document.querySelector(".mountain-front")
+
+let scrollY=0
+let mouseX=0.5
+let mouseY=0.5
+
+function applyMountainTransform(){
+
+back.style.transform=`translate(${(mouseX-0.5)*-15}px, ${scrollY*0.1}px)`
+mid.style.transform=`translate(${(mouseX-0.5)*-28}px, ${scrollY*0.2}px)`
+front.style.transform=`translate(${(mouseX-0.5)*-45}px, ${scrollY*0.35}px)`
+
+}
+
+window.addEventListener("scroll",()=>{
+scrollY=window.scrollY
+applyMountainTransform()
+},{passive:true})
+
+/* ============ PARALLAX: pointer move — mouse AND touch drag (hero layers, mountains, aurora tint) ============ */
+/* Tablets often have no mouse, so touch dragging drives the same effect */
+
+const heroLayers=document.querySelectorAll(".hero-layer")
+const auroraCanvasEl=document.getElementById("auroraCanvas")
+
+let parallaxTicking=false
+let pendingPointer=null
+
+function handlePointerParallax(clientX,clientY){
+
+pendingPointer={clientX,clientY}
+
+if(parallaxTicking) return
+parallaxTicking=true
+
+requestAnimationFrame(()=>{
+
+const px=pendingPointer.clientX
+const py=pendingPointer.clientY
+
+mouseX=px/window.innerWidth
+mouseY=py/window.innerHeight
+
+const offsetX=(mouseX-0.5)
+const offsetY=(mouseY-0.5)
+
+heroLayers.forEach(layer=>{
+const depth=parseFloat(layer.dataset.depth)||0
+layer.style.transform=`translate(${offsetX*depth}px, ${offsetY*depth*0.6}px)`
+})
+
+applyMountainTransform()
+
+auroraCanvasEl.style.transform=`translate(${offsetX*20}px, ${offsetY*15}px)`
+
+parallaxTicking=false
+
+})
+
+}
+
+/* on touch devices this only fires while a finger is actually dragging, so it stays cheap during normal scrolling */
+window.addEventListener("mousemove",(e)=>{
+handlePointerParallax(e.clientX,e.clientY)
+})
+
+window.addEventListener("touchmove",(e)=>{
+if(e.touches && e.touches[0]){
+handlePointerParallax(e.touches[0].clientX,e.touches[0].clientY)
+}
+},{passive:true})
+
+/* ============ TILT: project & skill cards react to cursor / finger ============ */
+
+const tiltCards=document.querySelectorAll(".tilt-card")
+
+function applyCardTilt(card,clientX,clientY){
+
+const rect=card.getBoundingClientRect()
+const px=(clientX-rect.left)/rect.width
+const py=(clientY-rect.top)/rect.height
+
+const rotateX=(0.5-py)*8
+const rotateY=(px-0.5)*8
+
+card.style.transform=`perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`
+
+if(card.classList.contains("skill-card")){
+card.style.setProperty("--mx",`${px*100}%`)
+card.style.setProperty("--my",`${py*100}%`)
+}
+
+}
+
+function resetCardTilt(card){
+card.style.transform="perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)"
+}
+
+/* generic rAF throttle so rapid-fire pointer/touch events don't force layout work more than once per frame */
+function rafThrottle(fn){
+let ticking=false
+let lastArgs=null
+return function(...args){
+lastArgs=args
+if(ticking) return
+ticking=true
+requestAnimationFrame(()=>{
+fn(...lastArgs)
+ticking=false
+})
+}
+}
+
+tiltCards.forEach(card=>{
+
+const throttledTilt=rafThrottle((x,y)=>applyCardTilt(card,x,y))
+
+card.addEventListener("mousemove",(e)=>{
+throttledTilt(e.clientX,e.clientY)
+})
+
+card.addEventListener("mouseleave",()=>{
+resetCardTilt(card)
+})
+
+card.addEventListener("touchstart",(e)=>{
+if(e.touches && e.touches[0]){
+card.classList.add("is-touched")
+applyCardTilt(card,e.touches[0].clientX,e.touches[0].clientY)
+}
+},{passive:true})
+
+card.addEventListener("touchmove",(e)=>{
+if(e.touches && e.touches[0]){
+throttledTilt(e.touches[0].clientX,e.touches[0].clientY)
+}
+},{passive:true})
+
+card.addEventListener("touchend",()=>{
+card.classList.remove("is-touched")
+resetCardTilt(card)
+})
+
+card.addEventListener("touchcancel",()=>{
+card.classList.remove("is-touched")
+resetCardTilt(card)
+})
+
+})
+
+/* ============ SKILL BARS: animate fill on scroll into view ============ */
+
+const skillFills=document.querySelectorAll(".skill-bar-fill")
+
+const fillObserver=new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+const target=entry.target.dataset.fill
+entry.target.style.width=target+"%"
+fillObserver.unobserve(entry.target)
+}
+})
+},{threshold:0.4})
+
+skillFills.forEach(f=>fillObserver.observe(f))
+
+/* ============ CANVAS SETUP ============ */
+
+const auroraCanvas=document.getElementById("auroraCanvas")
+const snowCanvas=document.getElementById("snowCanvas")
+
+const auroraCtx=auroraCanvas.getContext("2d")
+const snowCtx=snowCanvas.getContext("2d")
+
+function resize(){
+
+auroraCanvas.width=window.innerWidth
+auroraCanvas.height=window.innerHeight
+
+snowCanvas.width=window.innerWidth
+snowCanvas.height=window.innerHeight
+
+}
+
+resize()
+window.addEventListener("resize",resize)
+
+let time=0
+
+/* AURORA */
+
+function drawAurora(){
+
+auroraCtx.clearRect(0,0,auroraCanvas.width,auroraCanvas.height)
+
+for(let layer=0;layer<6;layer++){
+
+let baseHeight=200+layer*70
+
+let gradient=auroraCtx.createLinearGradient(0,baseHeight,0,baseHeight+300)
+
+gradient.addColorStop(0,"rgba(0,255,180,0.05)")
+gradient.addColorStop(0.3,"rgba(0,255,120,0.08)")
+gradient.addColorStop(0.6,"rgba(0,150,255,0.06)")
+gradient.addColorStop(1,"rgba(180,0,255,0.04)")
+
+auroraCtx.fillStyle=gradient
+
+auroraCtx.beginPath()
+auroraCtx.moveTo(0,baseHeight)
+
+for(let x=0;x<auroraCanvas.width;x+=20){
+
+let y=baseHeight+
+Math.sin(x*0.002+time+layer)*80+
+Math.sin(x*0.01+time*2)*20
+
+auroraCtx.lineTo(x,y)
+
+}
+
+auroraCtx.lineTo(auroraCanvas.width,auroraCanvas.height)
+auroraCtx.lineTo(0,auroraCanvas.height)
+auroraCtx.closePath()
+
+auroraCtx.fill()
+
+}
+
+time+=0.0015
+
+}
+
+/* SNOW — now with cursor-wind interaction */
+
+let snowflakes=[]
+
+for(let i=0;i<130;i++){
+
+snowflakes.push({
+x:Math.random()*window.innerWidth,
+y:Math.random()*window.innerHeight,
+r:Math.random()*3+1,
+speed:Math.random()*1+0.5
+})
+
+}
+
+let cursorPixelX=-9999
+let cursorPixelY=-9999
+
+window.addEventListener("mousemove",(e)=>{
+cursorPixelX=e.clientX
+cursorPixelY=e.clientY
+})
+
+window.addEventListener("touchmove",(e)=>{
+if(e.touches && e.touches[0]){
+cursorPixelX=e.touches[0].clientX
+cursorPixelY=e.touches[0].clientY
+}
+},{passive:true})
+
+/* release the wind effect once the finger lifts — otherwise it stays stuck at the last touch point */
+window.addEventListener("touchend",()=>{
+cursorPixelX=-9999
+cursorPixelY=-9999
+},{passive:true})
+
+window.addEventListener("touchcancel",()=>{
+cursorPixelX=-9999
+cursorPixelY=-9999
+},{passive:true})
+
+function drawSnow(){
+
+snowCtx.clearRect(0,0,snowCanvas.width,snowCanvas.height)
+
+snowCtx.fillStyle="white"
+
+snowflakes.forEach(f=>{
+
+snowCtx.beginPath()
+snowCtx.arc(f.x,f.y,f.r,0,Math.PI*2)
+snowCtx.fill()
+
+f.y+=f.speed
+f.x+=Math.sin(time*3+f.y*0.01)*0.4
+
+/* gentle wind push away from cursor, keeps winter feel (no gimmicks) */
+const dx=f.x-cursorPixelX
+const dy=f.y-cursorPixelY
+const dist=Math.sqrt(dx*dx+dy*dy)
+
+if(dist<110){
+const force=(110-dist)/110
+f.x+=(dx/(dist||1))*force*2.2
+f.y+=(dy/(dist||1))*force*1.2
+}
+
+if(f.y>snowCanvas.height){
+
+f.y=0
+f.x=Math.random()*snowCanvas.width
+
+}
+
+if(f.x<-10) f.x=snowCanvas.width+10
+if(f.x>snowCanvas.width+10) f.x=-10
+
+})
+
+}
+
+let rafId=null
+
+function animate(){
+
+drawAurora()
+drawSnow()
+
+rafId=requestAnimationFrame(animate)
+
+}
+
+animate()
+
+/* pause the render loop while the app/tab is in the background, resume when it's visible again */
+document.addEventListener("visibilitychange",()=>{
+if(document.hidden){
+if(rafId){
+cancelAnimationFrame(rafId)
+rafId=null
+}
+}else if(!rafId){
+animate()
+}
+})
+
+</script>
+
+</body>
+</html>
