@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+
+:root{
+  --frost: 190,225,255;
+  --accent: 0,255,200;
+}
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; scroll-padding-top:90px; }
+body{ background:#020617; overflow-x:hidden; font-family:sans-serif; }
+a, button{ -webkit-tap-highlight-color:transparent; }
+
+@media (prefers-reduced-motion: reduce){
+  *{
+    animation-duration:0.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.001ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+
+/* CANVAS & PARALLAX */
+#auroraCanvas{ position:fixed; top:0; left:0; z-index:-4; transition:transform .2s ease-out; }
+#snowCanvas{ position:fixed; top:0; left:0; z-index:-2; }
+.mountain-layer{ position:fixed; bottom:0; left:0; width:100%; pointer-events:none; will-change:transform; }
+.mountain-back{z-index:-3;opacity:.5;}
+.mountain-mid{z-index:-2;opacity:.7;}
+.mountain-front{z-index:-1;}
+
+/* NAV & MOBILE OVERLAYS */
+#mainNav{
+  position:fixed; top:0; left:0; width:100%; z-index:50;
+  background:rgba(2,6,23,0.55); backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.nav-link{ position:relative; color:#cbd5e1; transition:color .25s; }
+.nav-link::after{ content:""; position:absolute; left:0; bottom:-4px; width:0%; height:1px; background:rgb(var(--frost)); transition:width .3s; }
+.nav-link:hover, .nav-link.active{ color:rgb(var(--frost)); }
+.nav-link:hover::after, .nav-link.active::after{ width:100%; }
+
+.hamburger-line{
+  width:20px; height:2px; background:currentColor; border-radius:2px;
+  transition:transform .25s ease, opacity .2s ease;
+}
+#navToggle[aria-expanded="true"] .hamburger-line:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+#navToggle[aria-expanded="true"] .hamburger-line:nth-child(2){ opacity:0; }
+#navToggle[aria-expanded="true"] .hamburger-line:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+#mobileNavPanel.open{ max-height:420px; opacity:1; }
+#navBackdrop.nav-backdrop-visible{ opacity:1; pointer-events:auto; }
+body.nav-open-lock{ overflow:hidden; }
+
+/* CARDS RESPONSIVE */
+.hero-layer{ transition:transform .15s ease-out; will-change:transform; }
+.tilt-card{ transition:transform .15s ease-out, box-shadow .3s; transform-style:preserve-3d; will-change:transform; }
+.tilt-card:hover, .tilt-card.is-touched{ box-shadow:0 20px 45px rgba(0,255,200,0.15); }
+.tilt-card.is-touched{ transform:translateY(-2px); }
+
+.project-card img{ transition:transform .5s; }
+.project-card:hover img, .project-card.is-touched img{ transform:scale(1.08); }
+.project-overlay{ opacity:0; transition:opacity .3s; pointer-events:none; }
+.project-card:hover .project-overlay, .project-card.is-touched .project-overlay{ opacity:1; }
+.project-caption{ background:linear-gradient(to top, rgba(2,6,23,0.92), rgba(2,6,23,0.55) 70%, transparent); }
+
+.glass-card{
+  background:rgba(15,23,42,0.6); backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px; padding:20px;
+}
+.skill-card{
+  position:relative; background:rgba(15,23,42,0.55);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px; padding:16px; overflow:hidden;
+}
+
+/* Modificaciones automáticas para Tablets y PC */
+@media (min-width: 768px) {
+  .glass-card { padding: 28px; border-radius: 16px; }
+  .skill-card { padding: 22px; }
+  #home { min-height: 85vh; }
+}
+
+.skill-card::before{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), rgba(0,255,200,0.14), transparent 60%);
+  opacity:0; transition:opacity .3s; pointer-events:none;
+}
+.skill-card:hover::before, .skill-card.is-touched::before{ opacity:1; }
+.skill-bar-fill{ transition:width 1.2s cubic-bezier(.2,.8,.2,1); }
+
+.eyebrow{ letter-spacing:.25em; font-size:.7rem; color:rgba(190,225,255,0.6); text-transform:uppercase; }
+#home{ min-height:80vh; }
+@supports (height: 100dvh){ #home{ min-height:80dvh; } }
+
+#backToTop{ opacity:0; pointer-events:none; transition:opacity .25s ease, transform .2s ease; }
+#backToTop.backtotop-visible{ opacity:1; pointer-events:auto; }
+#backToTop:hover{ transform:scale(1.06); }
+#backToTop:active{ transform:scale(0.92); }
