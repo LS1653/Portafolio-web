@@ -1,6 +1,35 @@
 import { useEffect, useState } from 'react';
 import './index.css';
 
+// ==========================================
+// 1. COMPONENTES REUTILIZABLES (Tus "Prefabs")
+// ==========================================
+
+const ProjectThumbnail = ({ href, image, title, description }) => (
+  <a href={href} className="project-card tilt-card w-full max-w-sm relative rounded-xl overflow-hidden shadow-xl block">
+    <img src={image} className="w-full h-40 md:h-44 object-cover" alt={title} />
+    <div className="project-overlay absolute inset-0 bg-black/25"></div>
+    <div className="project-caption absolute bottom-0 left-0 right-0 px-4 md:px-5 pt-6 md:pt-8 pb-3 md:pb-4">
+      <h3 className="text-lg md:text-xl font-semibold">{title}</h3>
+      <p className="text-gray-300 text-xs md:text-sm mt-0.5">{description}</p>
+    </div>
+  </a>
+);
+
+const SkillCard = ({ title, description, fill }) => (
+  <div className="skill-card tilt-card">
+    <h4 className="font-semibold text-blue-200 mb-1">{title}</h4>
+    <p className="text-sm text-gray-400 mb-3">{description}</p>
+    <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+      <div className="skill-bar-fill h-full bg-blue-300 rounded-full" style={{width: '0%'}} data-fill={fill}></div>
+    </div>
+  </div>
+);
+
+// ==========================================
+// 2. APLICACIÓN PRINCIPAL
+// ==========================================
+
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
@@ -217,7 +246,6 @@ function App() {
     };
     document.addEventListener("visibilitychange", handleVisibility);
 
-    // Cleanup function al desmontar el componente
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resize);
@@ -228,7 +256,6 @@ function App() {
     };
   }, []);
 
-  // Función para cerrar el menú en móvil al hacer clic en un enlace
   const closeNav = () => setIsNavOpen(false);
 
   return (
@@ -275,7 +302,6 @@ function App() {
         </div>
       </nav>
 
-      {/* OVERLAY DEL MENU MOVIL */}
       <div 
         className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-250 ${isNavOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} 
         onClick={closeNav}
@@ -293,33 +319,26 @@ function App() {
         <p className="eyebrow text-center mb-3">Trabajo terminado</p>
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-16">Proyectos</h2>
 
+        {/* AQUÍ USAMOS NUESTRO COMPONENTE DE TARJETAS DE PROYECTO */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center mb-12 md:mb-16">
-          <a href="#project1" className="project-card tilt-card w-full max-w-sm relative rounded-xl overflow-hidden shadow-xl block">
-            <img src="assets/project-1-cover.jpg" className="w-full h-40 md:h-44 object-cover" alt="[PROYECTO 1]" />
-            <div className="project-overlay absolute inset-0 bg-black/25"></div>
-            <div className="project-caption absolute bottom-0 left-0 right-0 px-4 md:px-5 pt-6 md:pt-8 pb-3 md:pb-4">
-              <h3 className="text-lg md:text-xl font-semibold">[PROYECTO 1]</h3>
-              <p className="text-gray-300 text-xs md:text-sm mt-0.5">[DESCRIPCION BREVE]</p>
-            </div>
-          </a>
-          
-          <a href="#project2" className="project-card tilt-card w-full max-w-sm relative rounded-xl overflow-hidden shadow-xl block">
-            <img src="assets/project-2-cover.jpg" className="w-full h-40 md:h-44 object-cover" alt="[PROYECTO 2]" />
-            <div className="project-overlay absolute inset-0 bg-black/25"></div>
-            <div className="project-caption absolute bottom-0 left-0 right-0 px-4 md:px-5 pt-6 md:pt-8 pb-3 md:pb-4">
-              <h3 className="text-lg md:text-xl font-semibold">[PROYECTO 2]</h3>
-              <p className="text-gray-300 text-xs md:text-sm mt-0.5">[DESCRIPCION BREVE]</p>
-            </div>
-          </a>
-
-          <a href="#project3" className="project-card tilt-card w-full max-w-sm relative rounded-xl overflow-hidden shadow-xl block">
-            <img src="assets/project-3-cover.jpg" className="w-full h-40 md:h-44 object-cover" alt="[PROYECTO 3]" />
-            <div className="project-overlay absolute inset-0 bg-black/25"></div>
-            <div className="project-caption absolute bottom-0 left-0 right-0 px-4 md:px-5 pt-6 md:pt-8 pb-3 md:pb-4">
-              <h3 className="text-lg md:text-xl font-semibold">[PROYECTO 3]</h3>
-              <p className="text-gray-300 text-xs md:text-sm mt-0.5">[DESCRIPCION BREVE]</p>
-            </div>
-          </a>
+          <ProjectThumbnail 
+            href="#project1" 
+            image="assets/project-1-cover.jpg" 
+            title="[PROYECTO 1]" 
+            description="[DESCRIPCION BREVE]" 
+          />
+          <ProjectThumbnail 
+            href="#project2" 
+            image="assets/project-2-cover.jpg" 
+            title="[PROYECTO 2]" 
+            description="[DESCRIPCION BREVE]" 
+          />
+          <ProjectThumbnail 
+            href="#project3" 
+            image="assets/project-3-cover.jpg" 
+            title="[PROYECTO 3]" 
+            description="[DESCRIPCION BREVE]" 
+          />
         </div>
 
         <div id="project1" className="glass-card tilt-card mb-16">
@@ -368,24 +387,20 @@ function App() {
         <p className="eyebrow text-center mb-3">Exploración técnica</p>
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-16">Experimentos</h2>
 
+        {/* AQUÍ USAMOS NUESTRO COMPONENTE DE TARJETAS DE PROYECTO OTRA VEZ */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 place-items-center mb-12 md:mb-16">
-          <a href="#project4" className="project-card tilt-card w-full max-w-md relative rounded-xl overflow-hidden shadow-xl block">
-            <img src="assets/experiment-1-cover.jpg" className="w-full h-40 md:h-44 object-cover" alt="[EXPERIMENTO 1]" />
-            <div className="project-overlay absolute inset-0 bg-black/25"></div>
-            <div className="project-caption absolute bottom-0 left-0 right-0 px-4 md:px-5 pt-6 md:pt-8 pb-3 md:pb-4">
-              <h3 className="text-lg md:text-xl font-semibold">[EXPERIMENTO 1]</h3>
-              <p className="text-gray-300 text-xs md:text-sm mt-0.5">[DESCRIPCION BREVE]</p>
-            </div>
-          </a>
-
-          <a href="#project5" className="project-card tilt-card w-full max-w-md relative rounded-xl overflow-hidden shadow-xl block">
-            <img src="assets/experiment-2-cover.jpg" className="w-full h-40 md:h-44 object-cover" alt="[EXPERIMENTO 2]" />
-            <div className="project-overlay absolute inset-0 bg-black/25"></div>
-            <div className="project-caption absolute bottom-0 left-0 right-0 px-4 md:px-5 pt-6 md:pt-8 pb-3 md:pb-4">
-              <h3 className="text-lg md:text-xl font-semibold">[EXPERIMENTO 2]</h3>
-              <p className="text-gray-300 text-xs md:text-sm mt-0.5">[DESCRIPCION BREVE]</p>
-            </div>
-          </a>
+          <ProjectThumbnail 
+            href="#project4" 
+            image="assets/experiment-1-cover.jpg" 
+            title="[EXPERIMENTO 1]" 
+            description="[DESCRIPCION BREVE]" 
+          />
+          <ProjectThumbnail 
+            href="#project5" 
+            image="assets/experiment-2-cover.jpg" 
+            title="[EXPERIMENTO 2]" 
+            description="[DESCRIPCION BREVE]" 
+          />
         </div>
 
         <div id="project4" className="glass-card tilt-card mb-16">
@@ -423,49 +438,39 @@ function App() {
       <section id="habilidades" className="max-w-6xl mx-auto py-12 md:py-16 px-5">
         <p className="eyebrow text-center mb-3">Caja de herramientas</p>
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-16">Habilidades y Herramientas</h2>
+        
+        {/* AQUÍ USAMOS NUESTRO COMPONENTE DE HABILIDADES */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          <div className="skill-card tilt-card">
-            <h4 className="font-semibold text-blue-200 mb-1">Unity / C#</h4>
-            <p className="text-sm text-gray-400 mb-3">Gameplay, sistemas y arquitectura de proyectos.</p>
-            <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div className="skill-bar-fill h-full bg-blue-300 rounded-full" style={{width: '0%'}} data-fill="90"></div>
-            </div>
-          </div>
-          <div className="skill-card tilt-card">
-            <h4 className="font-semibold text-blue-200 mb-1">Diseño de Sistemas</h4>
-            <p className="text-sm text-gray-400 mb-3">Mecánicas, balance y documentación de diseño.</p>
-            <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div className="skill-bar-fill h-full bg-blue-300 rounded-full" style={{width: '0%'}} data-fill="85"></div>
-            </div>
-          </div>
-          <div className="skill-card tilt-card">
-            <h4 className="font-semibold text-blue-200 mb-1">Shaders / VFX</h4>
-            <p className="text-sm text-gray-400 mb-3">Shader Graph, partículas y efectos visuales en Unity.</p>
-            <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div className="skill-bar-fill h-full bg-blue-300 rounded-full" style={{width: '0%'}} data-fill="75"></div>
-            </div>
-          </div>
-          <div className="skill-card tilt-card">
-            <h4 className="font-semibold text-blue-200 mb-1">p5.js / JavaScript</h4>
-            <p className="text-sm text-gray-400 mb-3">Simulaciones generativas y experimentos interactivos.</p>
-            <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div className="skill-bar-fill h-full bg-blue-300 rounded-full" style={{width: '0%'}} data-fill="80"></div>
-            </div>
-          </div>
-          <div className="skill-card tilt-card">
-            <h4 className="font-semibold text-blue-200 mb-1">HTML / CSS</h4>
-            <p className="text-sm text-gray-400 mb-3">Interfaces web e interactividad para portafolios y prototipos.</p>
-            <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div className="skill-bar-fill h-full bg-blue-300 rounded-full" style={{width: '0%'}} data-fill="70"></div>
-            </div>
-          </div>
-          <div className="skill-card tilt-card">
-            <h4 className="font-semibold text-blue-200 mb-1">Trabajo en Equipo / Git</h4>
-            <p className="text-sm text-gray-400 mb-3">Control de versiones y colaboración en game jams y proyectos universitarios.</p>
-            <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div className="skill-bar-fill h-full bg-blue-300 rounded-full" style={{width: '0%'}} data-fill="85"></div>
-            </div>
-          </div>
+          <SkillCard 
+            title="Unity / C#" 
+            description="Gameplay, sistemas y arquitectura de proyectos." 
+            fill="90" 
+          />
+          <SkillCard 
+            title="Diseño de Sistemas" 
+            description="Mecánicas, balance y documentación de diseño." 
+            fill="85" 
+          />
+          <SkillCard 
+            title="Shaders / VFX" 
+            description="Shader Graph, partículas y efectos visuales en Unity." 
+            fill="75" 
+          />
+          <SkillCard 
+            title="p5.js / JavaScript" 
+            description="Simulaciones generativas y experimentos interactivos." 
+            fill="80" 
+          />
+          <SkillCard 
+            title="HTML / CSS" 
+            description="Interfaces web e interactividad para portafolios y prototipos." 
+            fill="70" 
+          />
+          <SkillCard 
+            title="Trabajo en Equipo / Git" 
+            description="Control de versiones y colaboración en game jams y proyectos universitarios." 
+            fill="85" 
+          />
         </div>
       </section>
 
