@@ -35,5 +35,5 @@ Si deseas correr este proyecto en tu entorno local, sigue estos pasos:
 ## 🔗 Enlaces del Proyecto
 
 - **Página:** [https://ls1653.github.io/Portafolio-web/](https://ls1653.github.io/Portafolio-web/)
-- **Video:** [Espacio listo para insertar el enlace del video]
-- **Diapositivas:** [Espacio listo para insertar el enlace de las diapositivas]
+- **Video:** [YouTube](https://youtu.be/W1Ri__PFZLI)
+- **Diapositivas:** [Canva](https://canva.link/2zk1aptx9ensikh)
