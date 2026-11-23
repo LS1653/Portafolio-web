@@ -577,7 +577,7 @@ function App() {
       >
         <img
           data-depth="30"
-          src="mi-portafolio/public/GalleryLogoKuro.jpg"
+          src={`${import.meta.env.BASE_URL}Gallery/LogoKuro.jpg`}
           className="hero-layer mx-auto mb-5 md:mb-8 w-40 md:w-64 opacity-90 drop-shadow-[0_0_20px_rgba(0,255,200,0.35)]"
           alt="Kuro Logo"
         />
