@@ -36,6 +36,59 @@ const SkillCard = ({ title, description, fill }) => (
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [activeExperiment, setActiveExperiment] = useState(0);
+
+  const experiments = [
+    {
+      title: 'Tempus Fugit',
+      category: 'p5.js / Creative coding',
+      description: 'A collection of simulations made with p5.js. Each experiment explores an implicit narrative through motion, weather, and generative systems.',
+      embed: 'https://editor.p5js.org/ThomasHyCr/full/MiOfTFzKC',
+      external: 'https://editor.p5js.org/ThomasHyCr/sketches/MiOfTFzKC',
+    },
+    {
+      title: 'Rain At Sea',
+      category: 'p5.js / Creative coding',
+      description: 'A generative ocean simulation shaped by wind, weather, and changing conditions.',
+      embed: 'https://editor.p5js.org/ThomasHyCr/full/reOL8vR9h',
+      external: 'https://editor.p5js.org/ThomasHyCr/sketches/reOL8vR9h',
+    },
+    {
+      title: 'Climate Planes',
+      category: 'p5.js / Creative coding',
+      description: 'A visual study of climate patterns and procedural motion.',
+      embed: 'https://editor.p5js.org/ThomasHyCr/full/qDTYRA_Vt',
+      external: 'https://editor.p5js.org/ThomasHyCr/sketches/qDTYRA_Vt',
+    },
+    {
+      title: 'Amoeba Sim',
+      category: 'p5.js / Creative coding',
+      description: 'An organic generative simulation inspired by cellular movement and adaptive behavior.',
+      embed: 'https://editor.p5js.org/ThomasHyCr/full/cp5th1pa-',
+      external: 'https://editor.p5js.org/ThomasHyCr/sketches/cp5th1pa-',
+    },
+    {
+      title: 'VFX & Shaders',
+      category: 'Unity / Real-time effects',
+      description: 'Experiments in particles, shaders, and real-time visual effects in Unity.',
+      embed: 'https://www.youtube.com/embed/w86HKbvUBQM',
+      external: 'https://www.youtube.com/watch?v=w86HKbvUBQM',
+    },
+    {
+      title: 'Various VFX',
+      category: 'Unity / Visual effects',
+      description: 'A collection of small visual effects and shader experiments.',
+      embed: 'https://www.youtube.com/embed/Y4AgT-_kT5U',
+      external: 'https://www.youtube.com/watch?v=Y4AgT-_kT5U',
+    },
+    {
+      title: 'Attack VFX',
+      category: 'Unity / Visual effects',
+      description: 'An attack effect study built from particles and real-time visuals.',
+      embed: 'https://www.youtube.com/embed/VTO-lB86WCM',
+      external: 'https://www.youtube.com/watch?v=VTO-lB86WCM',
+    },
+  ];
 
   useEffect(() => {
     const sections = document.querySelectorAll('section[id]');
@@ -459,7 +512,7 @@ function App() {
               className="nav-link px-3 py-2.5 text-sm"
               data-section="proyectos"
             >
-              Proyectos
+              Projects
             </a>
 
             <a
@@ -467,7 +520,7 @@ function App() {
               className="nav-link px-3 py-2.5 text-sm"
               data-section="experimentos"
             >
-              Experimentos
+              Experiments
             </a>
 
             <a
@@ -475,7 +528,7 @@ function App() {
               className="nav-link px-3 py-2.5 text-sm"
               data-section="habilidades"
             >
-              Habilidades y Herramientas
+              Skills & Tools
             </a>
 
             <a
@@ -483,14 +536,14 @@ function App() {
               className="nav-link px-3 py-2.5 text-sm"
               data-section="contacto"
             >
-              Sobre mí / Contacto
+              About / Contact
             </a>
           </div>
 
           <button
             onClick={() => setIsNavOpen(!isNavOpen)}
             className="md:hidden relative w-11 h-11 flex flex-col items-center justify-center gap-[5px] rounded-lg border border-blue-300/30 text-blue-200"
-            aria-label="Abrir menú"
+            aria-label="Open menu"
             aria-expanded={isNavOpen}
           >
             <span
@@ -530,7 +583,7 @@ function App() {
             data-section="proyectos"
             onClick={closeNav}
           >
-            Proyectos
+            Projects
           </a>
 
           <a
@@ -539,7 +592,7 @@ function App() {
             data-section="experimentos"
             onClick={closeNav}
           >
-            Experimentos
+            Experiments
           </a>
 
           <a
@@ -548,7 +601,7 @@ function App() {
             data-section="habilidades"
             onClick={closeNav}
           >
-            Habilidades y Herramientas
+            Skills & Tools
           </a>
 
           <a
@@ -557,7 +610,7 @@ function App() {
             data-section="contacto"
             onClick={closeNav}
           >
-            Sobre mí / Contacto
+            About / Contact
           </a>
         </div>
       </nav>
@@ -593,29 +646,29 @@ function App() {
           data-depth="8"
           className="hero-layer mt-4 md:mt-6 text-base md:text-xl text-blue-300"
         >
-          Game Developer • Diseñador • Artista
+          Game Developer • Designer • Artist
         </p>
 
         <p
           data-depth="4"
           className="hero-layer mt-3 text-gray-400 text-sm md:text-base"
         >
-          Programación de Gameplay • Diseño de Sistemas • Experimentos Interactivos
+          Gameplay Programming • Systems Design • Interactive Experiments
         </p>
 
         <a
           href="#proyectos"
           className="inline-block mt-7 md:mt-10 bg-blue-400 hover:bg-blue-300 text-black px-6 py-3 rounded-lg transition"
         >
-          Ver Proyectos
+          View Projects
         </a>
       </section>
 
       <section id="proyectos" className="max-w-6xl mx-auto py-12 md:py-24 px-5 md:px-6">
-        <p className="eyebrow text-center mb-3">Trabajo terminado</p>
+        <p className="eyebrow text-center mb-3">Selected work</p>
 
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-16">
-          Proyectos
+          Projects
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 place-items-center mb-12 md:mb-24">
@@ -623,21 +676,21 @@ function App() {
             href="#project1"
             image={`${import.meta.env.BASE_URL}Gallery/GGJ2026.jpg`}
             title="MasKeeper"
-            description="Videojuego hecho para GGJ-2026"
+            description="Game made for GGJ-2026"
           />
 
           <ProjectThumbnail
             href="#project2"
             image={`${import.meta.env.BASE_URL}Gallery/Sprinto.jpg`}
             title="Sprinto"
-            description="Plataformas / Videojuego Meme"
+            description="Platformer / Meme game"
           />
 
           <ProjectThumbnail
             href="#project3"
             image={`${import.meta.env.BASE_URL}Gallery/Alta.jpg`}
             title="Alta"
-            description="AppCenter relajante para automóviles"
+            description="Relaxation-focused car AppCenter"
           />
         </div>
 
@@ -647,8 +700,7 @@ function App() {
           </h3>
 
           <p className="text-gray-300 mb-6">
-            Videojuego hecho con amigos, proyecto ganador del Global Game Jam
-            2026.
+            Game made with friends, winner of Global Game Jam 2026.
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
@@ -664,7 +716,7 @@ function App() {
               rel="noreferrer"
               className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
             >
-              Jugar Online
+              Play Online
             </a>
 
             <a
@@ -684,9 +736,8 @@ function App() {
           </h3>
 
           <p className="text-gray-300 mb-6">
-            Videojuego pequeño con 3 niveles y una pelea contra jefe, hecho con
-            un par de amigos para un trabajo universitario. Tiene un humor y
-            diseño muy “meme”.
+            A small game with three levels and a boss fight, made with friends
+            for a university assignment. It has a very “meme”-focused style and sense of humor.
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
@@ -702,7 +753,7 @@ function App() {
               rel="noreferrer"
               className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
             >
-              Repositorio
+              Repository
             </a>
 
             <a
@@ -711,7 +762,7 @@ function App() {
               rel="noreferrer"
               className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-3 md:py-2 rounded-lg"
             >
-              Presentación
+              Presentation
             </a>
           </div>
         </div>
@@ -722,8 +773,7 @@ function App() {
           </h3>
 
           <p className="text-gray-300 mb-6">
-            Proyecto de diseño de un AppCenter enfocado en relajación, para uso
-            en automóviles.
+            AppCenter design project focused on relaxation for use in cars.
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
@@ -737,203 +787,121 @@ function App() {
               href="#contacto"
               className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
             >
-              Ver Proyecto
+              View Project
             </a>
           </div>
         </div>
       </section>
 
       <section id="experimentos" className="max-w-6xl mx-auto py-12 md:py-24 px-5 md:px-6">
-        <p className="eyebrow text-center mb-3">Exploración técnica</p>
+        <p className="eyebrow text-center mb-3">Technical exploration</p>
 
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-16">
-          Experimentos
+          Experiments
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 place-items-center mb-12 md:mb-24">
-          <ProjectThumbnail
-            href="#project4"
-            image={`${import.meta.env.BASE_URL}Gallery/Simulacion.jpg`}
-            title="Simulaciones"
-            description="Experimentos narrativos basados en The Nature of Code"
-          />
-
-          <ProjectThumbnail
-            href="#project5"
-            image={`${import.meta.env.BASE_URL}Gallery/VFX.jpg`}
-            title="VFX & Shaders"
-            description="Experimentos de VFX en Unity"
-          />
-        </div>
-
-        <div id="project4" className="glass-card tilt-card mb-16">
-          <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
-            Simulaciones
-          </h3>
-
-          <p className="text-gray-300 mb-6">
-            Varias simulaciones hechas con p5.js. Cada obra tiene una narrativa
-            implícita.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
-            <img src={`${import.meta.env.BASE_URL}Gallery/Simulacion.jpg`} className="rounded-lg shadow-lg" alt="Simulaciones p5.js" />
-            <img src={`${import.meta.env.BASE_URL}Gallery/sim1.png`} className="rounded-lg shadow-lg" alt="Simulación p5.js" />
-            <img src={`${import.meta.env.BASE_URL}Gallery/sim2.png`} className="rounded-lg shadow-lg" alt="Otra simulación p5.js" />
+        <div className="experiment-carousel glass-card" aria-label="Available experiments">
+          <div className="experiment-tabs" role="tablist" aria-label="Available experiments">
+            {experiments.map((experiment, index) => (
+              <button
+                key={experiment.title}
+                type="button"
+                role="tab"
+                aria-selected={activeExperiment === index}
+                className={activeExperiment === index ? 'experiment-tab active' : 'experiment-tab'}
+                onClick={() => setActiveExperiment(index)}
+              >
+                {experiment.title}
+              </button>
+            ))}
           </div>
 
-          <div className="flex gap-4 flex-wrap">
-            <a
-              href="https://editor.p5js.org/ThomasHyCr/sketches/MiOfTFzKC"
-              target="_blank"
-              rel="noreferrer"
-              className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
-            >
-              Tempus Fugit
-            </a>
-
-            <a
-              href="https://editor.p5js.org/ThomasHyCr/sketches/reOL8vR9h"
-              target="_blank"
-              rel="noreferrer"
-              className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
-            >
-              Rain At Sea
-            </a>
-
-            <a
-              href="https://editor.p5js.org/ThomasHyCr/sketches/qDTYRA_Vt"
-              target="_blank"
-              rel="noreferrer"
-              className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
-            >
-              Climate Planes
-            </a>
-
-            <a
-              href="https://editor.p5js.org/ThomasHyCr/sketches/cp5th1pa-"
-              target="_blank"
-              rel="noreferrer"
-              className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
-            >
-              Amoeba Sim
-            </a>
-          </div>
-        </div>
-
-        <div id="project5" className="glass-card tilt-card">
-          <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
-            VFX & Shaders
-          </h3>
-
-          <p className="text-gray-300 mb-6">
-            Experimentos de VFX y shaders en Unity.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
-            <img src={`${import.meta.env.BASE_URL}Gallery/VFX.jpg`} className="rounded-lg shadow-lg" alt="VFX y shaders" />
-            <img src={`${import.meta.env.BASE_URL}Gallery/VFX1.png`} className="rounded-lg shadow-lg" alt="Experimento de VFX" />
-            <img src={`${import.meta.env.BASE_URL}Gallery/VFX2.png`} className="rounded-lg shadow-lg" alt="Otro experimento de VFX" />
-          </div>
-
-          <div className="flex gap-4 flex-wrap">
-            <a
-              href="https://www.youtube.com/watch?v=w86HKbvUBQM"
-              target="_blank"
-              rel="noreferrer"
-              className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
-            >
-              Water Shader
-            </a>
-
-            <a
-              href="https://www.youtube.com/watch?v=Y4AgT-_kT5U"
-              target="_blank"
-              rel="noreferrer"
-              className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
-            >
-              Various VFX
-            </a>
-
-            <a
-              href="https://www.youtube.com/watch?v=VTO-lB86WCM"
-              target="_blank"
-              rel="noreferrer"
-              className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
-            >
-              Attack VFX
-            </a>
-          </div>
+          <article className="experiment-panel" role="tabpanel">
+            <iframe
+              key={experiments[activeExperiment].embed}
+              src={experiments[activeExperiment].embed}
+              title={experiments[activeExperiment].title}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
+            <div className="experiment-copy">
+              <p className="eyebrow">Selected experiment</p>
+              <p className="experiment-category">{experiments[activeExperiment].category}</p>
+              <h3>{experiments[activeExperiment].title}</h3>
+              <p>{experiments[activeExperiment].description}</p>
+              <a href={experiments[activeExperiment].external} target="_blank" rel="noreferrer">
+                View in p5.js <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </article>
         </div>
       </section>
 
       <section id="habilidades" className="max-w-6xl mx-auto py-12 md:py-24 px-5 md:px-6">
-        <p className="eyebrow text-center mb-3">Caja de herramientas</p>
+        <p className="eyebrow text-center mb-3">Toolkit</p>
 
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-10 md:mb-16">
-          Habilidades y Herramientas
+          Skills & Tools
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           <SkillCard
             title="Unity / C#"
-            description="Gameplay, sistemas y arquitectura de proyectos."
+            description="Gameplay, systems, and project architecture."
             fill="90"
           />
 
           <SkillCard
             title="Diseño de Sistemas"
-            description="Mecánicas, balance y documentación de diseño."
+            description="Mechanics, balance, and design documentation."
             fill="85"
           />
 
           <SkillCard
             title="Shaders / VFX"
-            description="Shader Graph, partículas y efectos visuales en Unity."
+            description="Shader Graph, particles, and visual effects in Unity."
             fill="75"
           />
 
           <SkillCard
             title="p5.js / JavaScript"
-            description="Simulaciones generativas y experimentos interactivos."
+            description="Generative simulations and interactive experiments."
             fill="80"
           />
 
           <SkillCard
             title="HTML / CSS"
-            description="Interfaces web e interactividad para portafolios y prototipos."
+            description="Web interfaces and interactivity for portfolios and prototypes."
             fill="70"
           />
 
           <SkillCard
             title="Trabajo en Equipo / Git"
-            description="Control de versiones y colaboración en game jams y proyectos universitarios."
+            description="Version control and collaboration in game jams and university projects."
             fill="85"
           />
         </div>
       </section>
 
       <section id="contacto" className="max-w-3xl mx-auto py-12 md:py-24 px-5 md:px-6">
-        <p className="eyebrow text-center mb-3">Quién soy</p>
+        <p className="eyebrow text-center mb-3">About me</p>
 
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-10">
-          Sobre mí
+          About me
         </h2>
 
         <div className="glass-card tilt-card mb-12">
           <p className="text-gray-300 text-center">
-            ¡Saludos! Soy Thomas, desarrollador y entusiasta de videojuegos.
-            Me fascina todo el proceso de hacer videojuegos y, por supuesto,
-            también disfruto jugarlos. Actualmente soy estudiante de Ingeniería
-            en Diseño de Entretenimiento Digital en la UPB, en Colombia. Como
-            puedes ver en este portafolio, también estoy enamorado de la nieve y
-            el invierno.
+            Hi! I’m Thomas, a game developer and enthusiast. I love every part of
+            making games and, of course, I also enjoy playing them. I am currently
+            studying Digital Entertainment Design Engineering at UPB in Colombia.
+            As you can see throughout this portfolio, I also love snow and winter.
           </p>
         </div>
 
         <div className="glass-card tilt-card text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">
-            Contacto
+            Contact
           </h2>
 
           <a
@@ -972,13 +940,13 @@ function App() {
           href="#home"
           className="text-blue-300 hover:text-blue-200 block mt-3"
         >
-          Volver arriba
+          Back to top
         </a>
       </footer>
 
       <button
         id="backToTop"
-        aria-label="Volver arriba"
+        aria-label="Back to top"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         className="fixed bottom-5 right-5 z-40 w-12 h-12 rounded-full bg-blue-400 text-black flex items-center justify-center shadow-lg"
       >
