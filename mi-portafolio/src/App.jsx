@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import './index.css';
 
-const ProjectThumbnail = ({ href, image, title, description }) => (
+const ProjectThumbnail = ({ href, onClick, isActive = false, image, title, description }) => (
   <a
     href={href}
-    className="project-card tilt-card w-full max-w-sm relative rounded-xl overflow-hidden shadow-xl block"
+    onClick={onClick}
+    aria-pressed={onClick ? isActive : undefined}
+    className={`project-card tilt-card w-full max-w-sm relative rounded-xl overflow-hidden shadow-xl block ${
+      isActive ? 'project-card-active' : ''
+    }`}
   >
     <img
       src={image}
@@ -36,6 +40,7 @@ const SkillCard = ({ title, description, fill }) => (
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [activeProject, setActiveProject] = useState('project2');
 
   useEffect(() => {
     const sections = document.querySelectorAll('section[id]');
@@ -618,33 +623,13 @@ function App() {
           Proyectos
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 place-items-center mb-12 md:mb-24">
-          <ProjectThumbnail
-            href="#project1"
-            image="/Gallery/GGJ2026.jpg"
-            title="MasKeeper"
-            description="Videojuego hecho para GGJ-2026"
-          />
-
-          <ProjectThumbnail
-            href="#project2"
-            image="/Gallery/Sprinto.jpg"
-            title="Sprinto"
-            description="Plataformas / Videojuego Meme"
-          />
-
-          <ProjectThumbnail
-            href="#project3"
-            image="/Gallery/Alta.jpg"
-            title="Alta"
-            description="AppCenter relajante para automóviles"
-          />
-        </div>
-
-        <div id="project1" className="glass-card tilt-card mb-16">
-          <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
-            MasKeeper
-          </h3>
+        <div id="project1" className="featured-project glass-card tilt-card mb-12 md:mb-16">
+          <div className="flex items-center justify-between gap-4 mb-3 md:mb-4">
+            <h3 className="text-2xl md:text-3xl font-bold">
+              MasKeeper
+            </h3>
+            <span className="featured-badge">Proyecto Destacado</span>
+          </div>
 
           <p className="text-gray-300 mb-6">
             Videojuego hecho con amigos, proyecto ganador del Global Game Jam
@@ -678,69 +663,91 @@ function App() {
           </div>
         </div>
 
-        <div id="project2" className="glass-card tilt-card mb-16">
-          <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
-            Sprinto
-          </h3>
+        <div className="project-carousel mb-6" aria-label="Carrusel de proyectos">
+          <ProjectThumbnail
+            href="#project-detail"
+            onClick={() => setActiveProject('project2')}
+            isActive={activeProject === 'project2'}
+            image="/Gallery/Sprinto.jpg"
+            title="Sprinto"
+            description="Plataformas / Videojuego Meme"
+          />
 
-          <p className="text-gray-300 mb-6">
-            Videojuego pequeño con 3 niveles y una pelea contra jefe, hecho con
-            un par de amigos para un trabajo universitario. Tiene un humor y
-            diseño muy “meme”.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
-            <img src="/Gallery/Sprinto.jpg" className="rounded-lg shadow-lg" alt="Sprinto" />
-            <img src="/Gallery/Spr1.png" className="rounded-lg shadow-lg" alt="Captura de Sprinto" />
-            <img src="/Gallery/Spr2.png" className="rounded-lg shadow-lg" alt="Otra captura de Sprinto" />
-          </div>
-
-          <div className="flex gap-4 flex-wrap">
-            <a
-              href="https://github.com/ThomasHyCr/scripting2025"
-              target="_blank"
-              rel="noreferrer"
-              className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
-            >
-              Repositorio
-            </a>
-
-            <a
-              href="https://www.canva.com/design/DAGfCP2GTj0"
-              target="_blank"
-              rel="noreferrer"
-              className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-3 md:py-2 rounded-lg"
-            >
-              Presentación
-            </a>
-          </div>
+          <ProjectThumbnail
+            href="#project-detail"
+            onClick={() => setActiveProject('project3')}
+            isActive={activeProject === 'project3'}
+            image="/Gallery/Alta.jpg"
+            title="Alta"
+            description="AppCenter relajante para automóviles"
+          />
         </div>
 
-        <div id="project3" className="glass-card tilt-card">
-          <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
-            Alta
-          </h3>
+        {activeProject === 'project2' ? (
+          <div id="project-detail" className="project-detail glass-card tilt-card">
+            <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
+              Sprinto
+            </h3>
 
-          <p className="text-gray-300 mb-6">
-            Proyecto de diseño de un AppCenter enfocado en relajación, para uso
-            en automóviles.
-          </p>
+            <p className="text-gray-300 mb-6">
+              Videojuego pequeño con 3 niveles y una pelea contra jefe, hecho con
+              un par de amigos para un trabajo universitario. Tiene un humor y
+              diseño muy “meme”.
+            </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
-            <img src="/Gallery/Alta.jpg" className="rounded-lg shadow-lg" alt="Alta" />
-            <img src="/Gallery/Alta1.png" className="rounded-lg shadow-lg" alt="Diseño de Alta" />
-            <img src="/Gallery/Alta2.png" className="rounded-lg shadow-lg" alt="Otra pantalla de Alta" />
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
+              <img src="/Gallery/Sprinto.jpg" className="rounded-lg shadow-lg" alt="Sprinto" />
+              <img src="/Gallery/Spr1.png" className="rounded-lg shadow-lg" alt="Captura de Sprinto" />
+              <img src="/Gallery/Spr2.png" className="rounded-lg shadow-lg" alt="Otra captura de Sprinto" />
+            </div>
+
+            <div className="flex gap-4 flex-wrap">
+              <a
+                href="https://github.com/ThomasHyCr/scripting2025"
+                target="_blank"
+                rel="noreferrer"
+                className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
+              >
+                Repositorio
+              </a>
+
+              <a
+                href="https://www.canva.com/design/DAGfCP2GTj0"
+                target="_blank"
+                rel="noreferrer"
+                className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-3 md:py-2 rounded-lg"
+              >
+                Presentación
+              </a>
+            </div>
           </div>
+        ) : (
+          <div id="project-detail" className="project-detail glass-card tilt-card">
+            <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
+              Alta
+            </h3>
 
-          <div className="flex gap-4 flex-wrap">
-            <a
-              href="#contacto"
-              className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
-            >
-              Ver Proyecto
-            </a>
+            <p className="text-gray-300 mb-6">
+              Proyecto de diseño de un AppCenter enfocado en relajación, para uso
+              en automóviles.
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
+              <img src="/Gallery/Alta.jpg" className="rounded-lg shadow-lg" alt="Alta" />
+              <img src="/Gallery/Alta1.png" className="rounded-lg shadow-lg" alt="Diseño de Alta" />
+              <img src="/Gallery/Alta2.png" className="rounded-lg shadow-lg" alt="Otra pantalla de Alta" />
+            </div>
+
+            <div className="flex gap-4 flex-wrap">
+              <a
+                href="#contacto"
+                className="bg-blue-400 hover:bg-blue-300 text-black px-4 py-3 md:py-2 rounded-lg"
+              >
+                Ver Proyecto
+              </a>
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       <section id="experimentos" className="max-w-6xl mx-auto py-12 md:py-24 px-5 md:px-6">

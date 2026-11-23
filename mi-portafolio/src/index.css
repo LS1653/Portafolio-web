@@ -61,6 +61,21 @@ body.nav-open-lock{ overflow:hidden; }
 .project-overlay{ opacity:0; transition:opacity .3s; pointer-events:none; }
 .project-card:hover .project-overlay, .project-card.is-touched .project-overlay{ opacity:1; }
 .project-caption{ background:linear-gradient(to top, rgba(2,6,23,0.92), rgba(2,6,23,0.55) 70%, transparent); }
+.featured-project{ border-color:rgba(0,255,200,.32); box-shadow:0 16px 45px rgba(0,255,200,.08); }
+.featured-badge{
+  flex:none; padding:.4rem .7rem; border:1px solid rgba(0,255,200,.45);
+  border-radius:999px; color:rgb(var(--accent)); background:rgba(0,255,200,.09);
+  font-size:.72rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+}
+.project-carousel{
+  display:flex; gap:1rem; overflow-x:auto; padding:.25rem .25rem 1.25rem;
+  scroll-snap-type:x mandatory; scrollbar-width:thin;
+}
+.project-carousel .project-card{
+  flex:0 0 min(280px, 82vw); scroll-snap-align:start;
+}
+.project-card-active{ outline:2px solid rgb(var(--accent)); outline-offset:3px; }
+.project-detail{ min-height:420px; }
 
 .glass-card{
   background:rgba(15,23,42,0.6); backdrop-filter:blur(10px);
