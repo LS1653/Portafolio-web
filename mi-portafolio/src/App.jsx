@@ -621,21 +621,21 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 place-items-center mb-12 md:mb-24">
           <ProjectThumbnail
             href="#project1"
-            image="/Gallery/GGJ2026.jpg"
+            image={`${import.meta.env.BASE_URL}Gallery/GGJ2026.jpg`}
             title="MasKeeper"
             description="Videojuego hecho para GGJ-2026"
           />
 
           <ProjectThumbnail
             href="#project2"
-            image="/Gallery/Sprinto.jpg"
+            image={`${import.meta.env.BASE_URL}Gallery/Sprinto.jpg`}
             title="Sprinto"
             description="Plataformas / Videojuego Meme"
           />
 
           <ProjectThumbnail
             href="#project3"
-            image="/Gallery/Alta.jpg"
+            image={`${import.meta.env.BASE_URL}Gallery/Alta.jpg`}
             title="Alta"
             description="AppCenter relajante para automóviles"
           />
@@ -652,9 +652,9 @@ function App() {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
-            <img src="/Gallery/GGJ2026.jpg" className="rounded-lg shadow-lg" alt="MasKeeper en Global Game Jam 2026" />
-            <img src="/Gallery/Msk1.png" className="rounded-lg shadow-lg" alt="Captura de MasKeeper" />
-            <img src="/Gallery/Msk2.png" className="rounded-lg shadow-lg" alt="Otra captura de MasKeeper" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/GGJ2026.jpg`} className="rounded-lg shadow-lg" alt="MasKeeper en Global Game Jam 2026" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/Msk1.png`} className="rounded-lg shadow-lg" alt="Captura de MasKeeper" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/Msk2.png`} className="rounded-lg shadow-lg" alt="Otra captura de MasKeeper" />
           </div>
 
           <div className="flex gap-4 flex-wrap">
@@ -690,9 +690,9 @@ function App() {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
-            <img src="/Gallery/Sprinto.jpg" className="rounded-lg shadow-lg" alt="Sprinto" />
-            <img src="/Gallery/Spr1.png" className="rounded-lg shadow-lg" alt="Captura de Sprinto" />
-            <img src="/Gallery/Spr2.png" className="rounded-lg shadow-lg" alt="Otra captura de Sprinto" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/Sprinto.jpg`} className="rounded-lg shadow-lg" alt="Sprinto" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/Spr1.png`} className="rounded-lg shadow-lg" alt="Captura de Sprinto" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/Spr2.png`} className="rounded-lg shadow-lg" alt="Otra captura de Sprinto" />
           </div>
 
           <div className="flex gap-4 flex-wrap">
@@ -727,9 +727,9 @@ function App() {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
-            <img src="/Gallery/Alta.jpg" className="rounded-lg shadow-lg" alt="Alta" />
-            <img src="/Gallery/Alta1.png" className="rounded-lg shadow-lg" alt="Diseño de Alta" />
-            <img src="/Gallery/Alta2.png" className="rounded-lg shadow-lg" alt="Otra pantalla de Alta" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/Alta.jpg`} className="rounded-lg shadow-lg" alt="Alta" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/Alta1.png`} className="rounded-lg shadow-lg" alt="Diseño de Alta" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/Alta2.png`} className="rounded-lg shadow-lg" alt="Otra pantalla de Alta" />
           </div>
 
           <div className="flex gap-4 flex-wrap">
@@ -753,14 +753,14 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 place-items-center mb-12 md:mb-24">
           <ProjectThumbnail
             href="#project4"
-            image="/Gallery/Simulacion.jpg"
+            image={`${import.meta.env.BASE_URL}Gallery/Simulacion.jpg`}
             title="Simulaciones"
             description="Experimentos narrativos basados en The Nature of Code"
           />
 
           <ProjectThumbnail
             href="#project5"
-            image="/Gallery/VFX.jpg"
+            image={`${import.meta.env.BASE_URL}Gallery/VFX.jpg`}
             title="VFX & Shaders"
             description="Experimentos de VFX en Unity"
           />
@@ -777,9 +777,9 @@ function App() {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
-            <img src="/Gallery/Simulacion.jpg" className="rounded-lg shadow-lg" alt="Simulaciones p5.js" />
-            <img src="/Gallery/Sim1.png" className="rounded-lg shadow-lg" alt="Simulación p5.js" />
-            <img src="/Gallery/Sim2.png" className="rounded-lg shadow-lg" alt="Otra simulación p5.js" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/Simulacion.jpg`} className="rounded-lg shadow-lg" alt="Simulaciones p5.js" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/sim1.png`} className="rounded-lg shadow-lg" alt="Simulación p5.js" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/sim2.png`} className="rounded-lg shadow-lg" alt="Otra simulación p5.js" />
           </div>
 
           <div className="flex gap-4 flex-wrap">
@@ -831,9 +831,9 @@ function App() {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
-            <img src="/Gallery/VFX.jpg" className="rounded-lg shadow-lg" alt="VFX y shaders" />
-            <img src="/Gallery/VFX1.png" className="rounded-lg shadow-lg" alt="Experimento de VFX" />
-            <img src="/Gallery/VFX2.png" className="rounded-lg shadow-lg" alt="Otro experimento de VFX" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/VFX.jpg`} className="rounded-lg shadow-lg" alt="VFX y shaders" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/VFX1.png`} className="rounded-lg shadow-lg" alt="Experimento de VFX" />
+            <img src={`${import.meta.env.BASE_URL}Gallery/VFX2.png`} className="rounded-lg shadow-lg" alt="Otro experimento de VFX" />
           </div>
 
           <div className="flex gap-4 flex-wrap">
