@@ -1,0 +1,171 @@
+# ==========================================
+# Node.js / NPM
+# ==========================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs
+logs/
+*.log
+
+# Dependency lock files
+# NOTA: package-lock.json, yarn.lock y pnpm-lock.yaml
+# SÍ deben subirse al repositorio.
+# No ignorarlos.
+
+
+# ==========================================
+# Vite
+# ==========================================
+
+dist/
+.vite/
+*.local
+
+
+# ==========================================
+# Environment variables
+# ==========================================
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ejemplo:
+# .env.example
+# SÍ puede subirse si solo contiene variables de ejemplo.
+
+
+# ==========================================
+# VS Code
+# ==========================================
+
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Si quieres compartir configuraciones específicas
+# puedes conservar settings.json y extensions.json.
+
+
+# ==========================================
+# Operating System
+# ==========================================
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.directory
+
+
+# ==========================================
+# Temporary files
+# ==========================================
+
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.old
+*.orig
+
+
+# ==========================================
+# Build / Cache
+# ==========================================
+
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+
+# ==========================================
+# Coverage / Testing
+# ==========================================
+
+coverage/
+.nyc_output/
+
+
+# ==========================================
+# WebStorm / JetBrains
+# ==========================================
+
+.idea/
+*.iml
+
+
+# ==========================================
+# Three.js / WebGL
+# ==========================================
+
+# No es necesario ignorar Three.js.
+# Se instala mediante npm.
+
+# Mantener dentro del repositorio:
+# src/
+# public/
+# assets/
+# shaders/
+# *.glsl
+# *.vert
+# *.frag
+
+
+# ==========================================
+# Blender
+# ==========================================
+
+# Archivos temporales de Blender
+*.blend1
+*.blend2
+*.blend3
+*.blend4
+*.blend5
+
+# Cache de simulaciones
+*.bphys
+*.mdd
+
+# Carpetas de cache
+__pycache__/
+
+
+# ==========================================
+# Generated / Exported files
+# ==========================================
+
+# Builds locales
+build/
+out/
+
+# Archivos comprimidos generados temporalmente
+*.zip
+*.rar
+*.7z
+
+
+# ==========================================
+# OS / Editor backups
+# ==========================================
+
+*.orig
+*.rej
